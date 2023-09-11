@@ -34,28 +34,17 @@ describe("Web Automation Section A", () => {
     cy.get("input:eq(1)").should("not.be.checked");
   });
 
-  it.only("5. Drag and drop", () => {
+  it("5. Drag and drop", () => {
+    // This function used plugin called cypress-drag-drop
     cy.visit("https://the-internet.herokuapp.com/drag_and_drop");
 
     cy.get(".column:eq(0)")
-      .trigger("mousedown")
-      .trigger("mousemove", { pageX: 600, pageY: 0 })
-      .trigger("mouseup");
-
-    // cy.get(".column:eq(0)").then(el => {
-    //   if (el) {
-    //     cy.wrap(el).trigger("dragstart");
-    //     cy.get(".column:eq(1)").trigger("drop");
-    //   }
-    // });
-
-    // cy.get(".column:eq(0)")
-    //   .drag(".column:eq(1)", {
-    //     force: true
-    //   })
-    //   .then(success => {
-    //     assert.isFalse(success);
-    //   });
+      .drag(".column:eq(1)", {
+        force: true
+      })
+      .then(success => {
+        assert.isTrue(success);
+      });
   });
 
   it("6. Dropdown", () => {
@@ -70,13 +59,13 @@ describe("Web Automation Section A", () => {
   it("7. File Download", () => {
     // I can only find the way to test Download by using Cypress Plugin cypress-downloadfile
     cy.downloadFile(
-      "https://the-internet.herokuapp.com/download/preprod.json",
+      "https://the-internet.herokuapp.com/download/download.pdf",
       "downloads",
-      "preprod.json"
+      "download.pdf"
     );
 
     // verifying the file is downloaded
-    cy.readFile("cypress\\downloads\\preprod.json");
+    cy.readFile("downloads\\download.pdf");
   });
 
   it("8. File Upload", () => {
